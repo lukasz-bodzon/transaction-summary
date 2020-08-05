@@ -1,0 +1,27 @@
+{
+  "clients": {
+    "client": [
+      {
+        "info": {
+          "name": "Natalia",
+          "surname": "Nowak",
+          "country": "Poland"
+        },
+        "balance": {
+          "total": "6750",
+          "currency": "PLN",
+          "date": "01.05.2020"
+        },
+        "transactions": [
+          {
+            "type": "outcome",
+            "description": "transfer",
+            "date": "11.05.2020",
+            "value": "1050,50,30",
+            "currency": "PLN"
+          }
+        ]
+      }
+    ]
+  }
+}

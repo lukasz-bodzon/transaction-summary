@@ -1,0 +1,34 @@
+{
+  "summary": {
+    "client": [
+      {
+        "balance": {
+          "total": "19010",
+          "currency": "PLN",
+          "date": "05.08.2020"
+        },
+        "totalTunover": "6900",
+        "totalIncome": "9200",
+        "totalExpenditure": "2300",
+        "info": {
+          "name": "Tomasz",
+          "surname": "Karcznski"
+        }
+      },
+      {
+        "balance": {
+          "total": "14999.50",
+          "currency": "PLN",
+          "date": "05.08.2020"
+        },
+        "totalTunover": "8249.50",
+        "totalIncome": "10500",
+        "totalExpenditure": "2250.50",
+        "info": {
+          "name": "Natalia",
+          "surname": "Nowak"
+        }
+      }
+    ]
+  }
+}
