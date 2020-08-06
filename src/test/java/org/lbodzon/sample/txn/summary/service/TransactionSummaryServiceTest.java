@@ -54,7 +54,7 @@ public class TransactionSummaryServiceTest {
                 Balance balance = new Balance();
                 balance.setTotal(new BigDecimal(6750));
                 balance.setCurrency(Currency.getInstance("PLN"));
-                balance.setDate(new SimpleDateFormat("dd-MMM-yyyy").parse("01-May-2020"));
+                balance.setDate(new SimpleDateFormat("dd.mm.yyyy").parse("01.05.2020"));
                 return balance;
         }
 
