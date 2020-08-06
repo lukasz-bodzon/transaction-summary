@@ -9,19 +9,26 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
 
-@Getter
 @Setter
 public class Transaction {
 
+        @Getter
         private TransactionType type;
 
+        @Getter
         private String description;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
         private Date date;
 
+        @Getter
         @JsonDeserialize(using = BigDecimalDeserializer.class)
         private BigDecimal value;
 
+        @Getter
         private Currency currency;
+
+        public Date getDate() {
+                return (Date)date.clone();
+        }
 }
