@@ -1,15 +1,18 @@
 package org.lbodzon.sample.txn.summary.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
-@Getter
 @Setter
 public class TransactionSummaryTuple {
 
         @JsonProperty("client")
-        List<ClientTransactionSummaryEntry> clientEntries;
+        private List<ClientTransactionSummaryEntry> clientEntries;
+
+        public List<ClientTransactionSummaryEntry> getClientEntries() {
+                return Collections.unmodifiableList(clientEntries);
+        }
 }

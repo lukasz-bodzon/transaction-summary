@@ -34,7 +34,7 @@ public class TransactionSummaryServiceTest {
 
                 assertEquals(container.getClientTransactionEntryTuple().getEntries().get(0).getClient(),
                       summary.getTransactionSummaryTuple().getClientEntries().get(0).getClient());
-                assertEquals(new Date(), summary.getTransactionSummaryTuple().getClientEntries().get(0).getBalance().getDate());
+                assertEquals(new Date().toString(), summary.getTransactionSummaryTuple().getClientEntries().get(0).getBalance().getDate().toString());
                 assertEquals(container.getClientTransactionEntryTuple().getEntries().get(0).getBalance().getCurrency(),
                       summary.getTransactionSummaryTuple().getClientEntries().get(0).getBalance().getCurrency());
                 assertEquals(new BigDecimal("14999.50"), summary.getTransactionSummaryTuple().getClientEntries().get(0).getBalance().getTotal());

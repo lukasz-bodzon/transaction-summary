@@ -1,15 +1,18 @@
 package org.lbodzon.sample.txn.summary;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.lbodzon.sample.txn.summary.controller.TransactionSummaryController;
-import org.lbodzon.sample.txn.summary.service.TransactionSummaryService;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -21,18 +24,25 @@ import java.util.GregorianCalendar;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = { TransactionSummaryService.class, TransactionSummaryController.class })
-@WebMvcTest
+@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
+@SpringBootTest
 public class TransactionSummaryIntegrationTest {
 
         static Logger logger = LoggerFactory.getLogger(TransactionSummaryIntegrationTest.class);
 
-        @Autowired
         private MockMvc mockMvc;
+
+        @BeforeEach
+        public void setUp(WebApplicationContext context, RestDocumentationContextProvider provider) {
+                mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                      .apply(documentationConfiguration(provider)).build();
+        }
 
         @Test
         public void testResponseForValidPayload() throws Exception {
@@ -41,6 +51,7 @@ public class TransactionSummaryIntegrationTest {
                                 .contentType("application/json;charset=UTF-8"))
                       .andExpect(status().isOk()).andExpect(content()
                       .contentType("application/json"))
+                      .andDo(document("summary-success"))
                       .andReturn();
 
                 assertEquals(readFile("./src//test/resources/response.json"), result.getResponse().getContentAsString());

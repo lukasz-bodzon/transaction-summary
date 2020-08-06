@@ -13,15 +13,15 @@ import java.util.Date;
 @Setter
 public class Transaction {
 
-        TransactionType type;
+        private TransactionType type;
 
-        String description;
+        private String description;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-        Date date;
+        private Date date;
 
         @JsonDeserialize(using = BigDecimalDeserializer.class)
-        BigDecimal value;
+        private BigDecimal value;
 
-        Currency currency;
+        private Currency currency;
 }

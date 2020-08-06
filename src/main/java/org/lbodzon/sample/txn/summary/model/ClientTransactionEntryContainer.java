@@ -9,5 +9,5 @@ import lombok.Setter;
 public class ClientTransactionEntryContainer {
 
         @JsonProperty("clients")
-        ClientTransactionEntryTuple clientTransactionEntryTuple;
+        private ClientTransactionEntryTuple clientTransactionEntryTuple;
 }

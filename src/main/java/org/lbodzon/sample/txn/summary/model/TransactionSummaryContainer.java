@@ -9,5 +9,5 @@ import lombok.Setter;
 public class TransactionSummaryContainer {
 
         @JsonProperty("summary")
-        TransactionSummaryTuple transactionSummaryTuple;
+        private TransactionSummaryTuple transactionSummaryTuple;
 }

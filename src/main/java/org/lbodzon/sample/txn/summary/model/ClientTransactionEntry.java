@@ -1,19 +1,30 @@
 package org.lbodzon.sample.txn.summary.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
-@Getter
 @Setter
 public class ClientTransactionEntry {
 
         @JsonProperty("info")
-        Client client;
+        private Client client;
 
-        Balance balance;
+        private Balance balance;
 
-        List<Transaction> transactions;
+        private List<Transaction> transactions;
+
+        public Client getClient() {
+              return new Client(client);
+        }
+
+        public Balance getBalance() {
+                return new Balance(balance);
+        }
+
+        public List<Transaction> getTransactions() {
+                return Collections.unmodifiableList(transactions);
+        }
 }

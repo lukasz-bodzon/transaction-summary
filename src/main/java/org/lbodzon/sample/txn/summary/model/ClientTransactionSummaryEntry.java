@@ -7,21 +7,31 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Getter
 @Setter
 public class ClientTransactionSummaryEntry {
 
         @JsonProperty("info")
-        Client client;
+        private Client client;
 
-        Balance balance;
+        private Balance balance;
 
+        @Getter
         @JsonFormat(shape = JsonFormat.Shape.STRING)
-        BigDecimal totalTunover;
+        private BigDecimal totalTunover;
 
+        @Getter
         @JsonFormat(shape = JsonFormat.Shape.STRING)
-        BigDecimal totalIncome;
+        private BigDecimal totalIncome;
 
+        @Getter
         @JsonFormat(shape = JsonFormat.Shape.STRING)
-        BigDecimal totalExpenditure;
+        private BigDecimal totalExpenditure;
+
+        public Client getClient() {
+                return new Client(client);
+        }
+
+        public Balance getBalance() {
+                return new Balance(balance);
+        }
 }
