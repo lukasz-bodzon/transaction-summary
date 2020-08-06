@@ -17,15 +17,15 @@ public class ClientTransactionSummaryEntry {
 
         @Getter
         @JsonFormat(shape = JsonFormat.Shape.STRING)
-        private BigDecimal totalTunover;
+        private BigDecimal totalTunover = new BigDecimal(0);
 
         @Getter
         @JsonFormat(shape = JsonFormat.Shape.STRING)
-        private BigDecimal totalIncome;
+        private BigDecimal totalIncome = new BigDecimal(0);
 
         @Getter
         @JsonFormat(shape = JsonFormat.Shape.STRING)
-        private BigDecimal totalExpenditure;
+        private BigDecimal totalExpenditure = new BigDecimal(0);
 
         public Client getClient() {
                 return new Client(client);
