@@ -17,15 +17,19 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionSummaryService {
 
-        private static ClientTransactionSummaryEntry apply(ClientTransactionEntry transactionEntry) {
+        public TransactionSummaryContainer createTransactionSummary(ClientTransactionEntryContainer clientTransactionEntries) {
+                TransactionSummaryTuple transactionSummaryTuple = new TransactionSummaryTuple();
+                transactionSummaryTuple.setClientEntries(clientTransactionEntries.getClientTransactionEntryTuple().getEntries().stream().map(
+                                TransactionSummaryService::aggregateTransactions).collect(Collectors.toList()));
+
+                TransactionSummaryContainer transactionSummaryContainer = new TransactionSummaryContainer();
+                transactionSummaryContainer.setTransactionSummaryTuple(transactionSummaryTuple);
+                return transactionSummaryContainer;
+        }
+
+        private static ClientTransactionSummaryEntry aggregateTransactions(ClientTransactionEntry transactionEntry) {
                 ClientTransactionSummaryEntry clientTransactionSummaryEntry = new ClientTransactionSummaryEntry();
                 clientTransactionSummaryEntry.setClient(transactionEntry.getClient());
-
-                Date now = new Date();
-                Balance balance = new Balance();
-                balance.setCurrency(transactionEntry.getBalance().getCurrency());
-                balance.setTotal(transactionEntry.getBalance().getTotal());
-                balance.setDate(now);
 
                 BigDecimal totalIncome = new BigDecimal(0);
                 BigDecimal totalExpenditure = new BigDecimal(0);
@@ -33,27 +37,25 @@ public class TransactionSummaryService {
                 for (Transaction transaction : transactionEntry.getTransactions()) {
                         if (transaction.getType() == TransactionType.INCOME) {
                                 totalIncome = totalIncome.add(transaction.getValue());
-                                balance.setTotal(balance.getTotal().add(transaction.getValue()));
                         } else {
                                 totalExpenditure = totalExpenditure.add(transaction.getValue());
-                                balance.setTotal(balance.getTotal().subtract(transaction.getValue()));
                         }
                 }
 
-                clientTransactionSummaryEntry.setBalance(balance);
                 clientTransactionSummaryEntry.setTotalIncome(totalIncome);
                 clientTransactionSummaryEntry.setTotalExpenditure(totalExpenditure);
                 clientTransactionSummaryEntry.setTotalTunover(totalIncome.subtract(totalExpenditure));
+
+                adjustBalance(transactionEntry, clientTransactionSummaryEntry);
+
                 return clientTransactionSummaryEntry;
         }
 
-        public TransactionSummaryContainer createTransactionSummary(ClientTransactionEntryContainer clientTransactionEntries) {
-                TransactionSummaryTuple transactionSummaryTuple = new TransactionSummaryTuple();
-                transactionSummaryTuple.setClientEntries(clientTransactionEntries.getClientTransactionEntryTuple().getEntries().stream().map(
-                                TransactionSummaryService::apply).collect(Collectors.toList()));
-
-                TransactionSummaryContainer transactionSummaryContainer = new TransactionSummaryContainer();
-                transactionSummaryContainer.setTransactionSummaryTuple(transactionSummaryTuple);
-                return transactionSummaryContainer;
+        private static void adjustBalance(ClientTransactionEntry transactionEntry, ClientTransactionSummaryEntry clientTransactionSummaryEntry) {
+                Balance balance = new Balance();
+                balance.setDate(new Date());
+                balance.setCurrency(transactionEntry.getBalance().getCurrency());
+                balance.setTotal(transactionEntry.getBalance().getTotal().add(clientTransactionSummaryEntry.getTotalTunover()));
+                clientTransactionSummaryEntry.setBalance(balance);
         }
 }

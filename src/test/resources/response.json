@@ -5,7 +5,7 @@
         "balance": {
           "total": "19010",
           "currency": "PLN",
-          "date": "05.08.2020"
+          "date": "<date>"
         },
         "totalTunover": "6900",
         "totalIncome": "9200",
@@ -19,7 +19,7 @@
         "balance": {
           "total": "14999.50",
           "currency": "PLN",
-          "date": "05.08.2020"
+          "date": "<date>"
         },
         "totalTunover": "8249.50",
         "totalIncome": "10500",
